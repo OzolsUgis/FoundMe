@@ -10,4 +10,5 @@ val darkGreen = Color (0xFF23343D)
 val textColor = Color(0xFF707070)
 
 val mainGradient = listOf(lightPink, lightGreen)
-val objectGradient = listOf(lightPink, purple)
+val objectGradient = listOf( purple,lightPink)
+val decorationObject = listOf(purple, darkGreen)
