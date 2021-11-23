@@ -1,4 +1,4 @@
-package com.ugisozols
+package com.ugisozols.foundme
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
