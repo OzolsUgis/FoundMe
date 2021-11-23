@@ -1,4 +1,4 @@
-package com.ugisozols.foundme.presentation.ui.theme
+package com.ugisozols.foundme.core.presentation.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

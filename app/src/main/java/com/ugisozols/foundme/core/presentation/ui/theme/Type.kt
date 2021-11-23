@@ -1,4 +1,4 @@
-package com.ugisozols.foundme.presentation.ui.theme
+package com.ugisozols.foundme.core.presentation.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

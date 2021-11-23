@@ -1,4 +1,4 @@
-package com.ugisozols.foundme.presentation.ui.theme
+package com.ugisozols.foundme.core.presentation.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

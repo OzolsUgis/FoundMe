@@ -1,4 +1,4 @@
-package com.ugisozols.foundme.presentation.ui.theme.shapes
+package com.ugisozols.foundme.core.presentation.ui.theme.shapes
 
 
 import androidx.compose.foundation.Canvas
@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
-import com.ugisozols.foundme.presentation.ui.theme.decorationObject
-import com.ugisozols.foundme.presentation.ui.theme.decorationObjectSize
+import com.ugisozols.foundme.core.presentation.ui.theme.decorationObject
+import com.ugisozols.foundme.core.presentation.ui.theme.decorationObjectSize
 
 @Preview
 @Composable

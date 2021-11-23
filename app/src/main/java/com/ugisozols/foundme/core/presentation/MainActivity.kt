@@ -1,4 +1,4 @@
-package com.ugisozols.foundme
+package com.ugisozols.foundme.core.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
