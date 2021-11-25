@@ -1,8 +1,8 @@
-package com.ugisozols.foundme.auth_feature.domain.remote
+package com.ugisozols.foundme.auth_feature.data.remote
 
-import com.ugisozols.foundme.auth_feature.domain.remote.requests.AccountRequest
-import com.ugisozols.foundme.auth_feature.domain.remote.requests.CreateAccountRequest
-import com.ugisozols.foundme.auth_feature.domain.remote.responses.AuthResponse
+import com.ugisozols.foundme.auth_feature.data.remote.requests.AccountRequest
+import com.ugisozols.foundme.auth_feature.data.remote.requests.CreateAccountRequest
+import com.ugisozols.foundme.auth_feature.data.remote.responses.AuthResponse
 import com.ugisozols.foundme.core.domain.models.responses.MainApiResponse
 import retrofit2.http.Body
 import retrofit2.http.POST

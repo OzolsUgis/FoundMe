@@ -1,4 +1,4 @@
-package com.ugisozols.foundme.auth_feature.domain.repository
+package com.ugisozols.foundme.auth_feature.domain
 
 import com.ugisozols.foundme.core.util.MainResource
 

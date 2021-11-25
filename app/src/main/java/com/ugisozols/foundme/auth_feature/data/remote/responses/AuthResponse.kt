@@ -1,4 +1,4 @@
-package com.ugisozols.foundme.auth_feature.domain.remote.responses
+package com.ugisozols.foundme.auth_feature.data.remote.responses
 
 data class AuthResponse(
     val userId : String,
