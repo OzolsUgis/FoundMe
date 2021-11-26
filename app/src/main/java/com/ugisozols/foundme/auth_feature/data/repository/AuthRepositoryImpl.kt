@@ -2,7 +2,7 @@ package com.ugisozols.foundme.auth_feature.data.repository
 
 import android.content.SharedPreferences
 import com.ugisozols.foundme.auth_feature.data.remote.AuthApi
-import com.ugisozols.foundme.auth_feature.domain.AuthRepository
+import com.ugisozols.foundme.auth_feature.domain.repository.AuthRepository
 import com.ugisozols.foundme.core.util.MainResource
 
 class AuthRepositoryImpl(

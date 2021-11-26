@@ -1,6 +1,10 @@
 package com.ugisozols.foundme.di
 
+import android.content.SharedPreferences
 import com.ugisozols.foundme.auth_feature.data.remote.AuthApi
+import com.ugisozols.foundme.auth_feature.data.repository.AuthRepositoryImpl
+import com.ugisozols.foundme.auth_feature.domain.repository.AuthRepository
+import com.ugisozols.foundme.auth_feature.domain.use_case.RegisterUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,4 +28,21 @@ object AuthModule {
             .build()
             .create(AuthApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(
+        api : AuthApi,
+        sharedPreferences: SharedPreferences
+    ) : AuthRepository{
+        return AuthRepositoryImpl(api,sharedPreferences)
+    }
+    @Provides
+    @Singleton
+    fun provideRegisterUseCase(
+        repository: AuthRepository
+    ): RegisterUseCase{
+        return RegisterUseCase(repository)
+    }
+
 }
