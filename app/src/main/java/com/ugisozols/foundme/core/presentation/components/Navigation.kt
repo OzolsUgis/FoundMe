@@ -12,16 +12,16 @@ import com.ugisozols.foundme.auth_feature.presentation.register.RegisterScreen
 import com.ugisozols.foundme.core.util.Screen
 
 @Composable
-fun Navigation(
-    navController: NavHostController
+fun NavHostController.Navigation(
+
 ){
    NavHost(
-       navController = navController,
+       navController = this,
        startDestination = Screen.Register.route,
        modifier = Modifier.fillMaxSize()
    ){
        composable(Screen.Register.route){
-           RegisterScreen(navController = navController)
+           RegisterScreen(navController = this@Navigation)
        }
 
    }

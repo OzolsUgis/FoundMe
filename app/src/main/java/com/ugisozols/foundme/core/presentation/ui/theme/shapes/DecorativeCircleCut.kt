@@ -6,15 +6,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.ugisozols.foundme.core.presentation.ui.theme.decorationObject
 import com.ugisozols.foundme.core.presentation.ui.theme.decorationObjectSize
 
-@Preview
+
 @Composable
 fun DecorativeCircleCut(
+    modifier: Modifier
 ){
-    Canvas(modifier = Modifier.size(decorationObjectSize)){
+    Canvas(modifier = Modifier.size(800.dp)){
+
         val test = Path().apply{
             moveTo(x = 0f, y = size.height)
             lineTo(x = 0f, y = size.height - 250f)

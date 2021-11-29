@@ -1,26 +1,19 @@
-package com.ugisozols.foundme.auth_feature.presentation.register
+package com.ugisozols.foundme.core.presentation.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.TextButton
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.ugisozols.foundme.core.presentation.components.AuthScreen
 import com.ugisozols.foundme.core.presentation.ui.theme.mainGradient
 import com.ugisozols.foundme.core.presentation.ui.theme.shapes.CircleShape
 import com.ugisozols.foundme.core.presentation.ui.theme.shapes.DecorativeCircleCut
 
+@Preview
 @Composable
-fun RegisterScreen(
-    navController: NavController,
-    viewModel: RegisterViewModel = hiltViewModel()
+fun AuthScreen(
 ){
     Column(
         Modifier
@@ -34,6 +27,7 @@ fun RegisterScreen(
             Modifier
                 .wrapContentSize(unbounded = true)
         )
-
+        
     }
+
 }
