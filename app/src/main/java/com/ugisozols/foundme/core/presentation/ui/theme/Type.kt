@@ -22,12 +22,15 @@ val Typography = Typography(
     body1 = TextStyle(
         fontFamily = quicksand,
         fontWeight = FontWeight.Normal,
-        fontSize = 20.sp
+        color = textColor,
+        fontSize = 16.sp
     ),
     body2 = TextStyle(
         fontFamily = quicksand,
         fontWeight = Bold,
-        fontSize = 20.sp
-    )
+        color = textColor,
+        fontSize = 16.sp
+    ),
+
 
 )
