@@ -18,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ugisozols.foundme.R
 import com.ugisozols.foundme.auth_feature.presentation.components.AuthButton
 import com.ugisozols.foundme.auth_feature.presentation.components.AuthSpacer
+import com.ugisozols.foundme.auth_feature.presentation.register.util.RegistrationProcess
 import com.ugisozols.foundme.core.presentation.components.StandardTextField
 import com.ugisozols.foundme.core.presentation.ui.theme.authFieldPaddingSize
 import com.ugisozols.foundme.core.presentation.ui.theme.mainGradient
@@ -63,7 +64,7 @@ fun RegisterInputSection(
     modifier: Modifier,
     viewModel: RegisterViewModel = hiltViewModel()
 ){
-    val email by viewModel.email.observeAsState(initial = "")
+    val email = viewModel.emailState.value
     Text(
         text = stringResource(id = R.string.auth_email),
         modifier = modifier,
@@ -71,9 +72,9 @@ fun RegisterInputSection(
     )
     AuthSpacer()
     StandardTextField(
-        text = email,
-        onValueChange = {emailInput ->
-            viewModel.onEmailChange(emailInput)
+        text = email.text,
+        onValueChange = { input ->
+            viewModel.onEvent(RegistrationProcess.EmailInput(input))
         }
     )
 }
@@ -84,7 +85,7 @@ fun PasswordInputSection(
     modifier: Modifier,
     viewModel: RegisterViewModel = hiltViewModel()
 ){
-    val password by viewModel.password.observeAsState(initial = "")
+    val passwordState = viewModel.passwordState.value
     Text(
         text = stringResource(id = R.string.auth_password),
         modifier = modifier,
@@ -92,9 +93,9 @@ fun PasswordInputSection(
     )
     AuthSpacer()
     StandardTextField(
-        text = password ,
-        onValueChange = { passwordInput ->
-            viewModel.onPasswordChange(passwordInput)
+        text = passwordState.text ,
+        onValueChange = { input ->
+            viewModel.onEvent(RegistrationProcess.PasswordInput(input))
         },
         isVisible = false,
         keyboardInput = KeyboardType.Password
@@ -107,7 +108,7 @@ fun ConfirmPasswordInputSection(
     modifier: Modifier,
     viewModel: RegisterViewModel = hiltViewModel()
 ){
-    val confirmedPassword by viewModel.confirmedPassword.observeAsState(initial = "")
+    val confirmedPasswordState = viewModel.confirmedPasswordState.value
     Text(
         text = stringResource(id = R.string.auth_confirmed_password),
         modifier = modifier,
@@ -115,9 +116,9 @@ fun ConfirmPasswordInputSection(
     )
     AuthSpacer()
     StandardTextField(
-        text = confirmedPassword,
-        onValueChange = {passwordInput->
-            viewModel.onConfirmedPasswordChange(passwordInput)
+        text = confirmedPasswordState.text,
+        onValueChange = { input ->
+            viewModel.onEvent(RegistrationProcess.ConfirmedPasswordInput(input))
         },
         isVisible = false,
         keyboardInput = KeyboardType.Password
@@ -133,7 +134,7 @@ fun RegisterUserButton(
         modifier = modifier,
         buttonText = stringResource(id = R.string.auth_register_button),
         onButtonClick = {
-            
+            viewModel.onEvent(RegistrationProcess.Register)
         }
     )
 }

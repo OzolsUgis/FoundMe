@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import androidx.security.crypto.MasterKeys
 import com.ugisozols.foundme.core.util.Constants
 import com.ugisozols.foundme.core.util.Constants.SHARED_PREF_NAME
 import dagger.Module

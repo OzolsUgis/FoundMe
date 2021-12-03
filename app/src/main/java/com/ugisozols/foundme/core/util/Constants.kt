@@ -5,4 +5,5 @@ object Constants {
 
     const val KEY_JWT_TOKEN = "jwt_token"
     const val KEY_USER_ID = "userId"
+    const val MIN_PASSWORD_LENGTH = 8
 }

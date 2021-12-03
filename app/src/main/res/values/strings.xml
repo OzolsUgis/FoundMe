@@ -4,4 +4,6 @@
     <string name="auth_password">Password</string>
     <string name="auth_confirmed_password">Confirm Password</string>
     <string name="auth_register_button">Register</string>
+    <string name="auth_successfully_registered">Registration completed</string>
+    <string name="auth_unknown_error">Unknown error occurred</string>
 </resources>
