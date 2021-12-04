@@ -1,63 +1,116 @@
 package com.ugisozols.foundme.auth_feature.presentation.register
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ugisozols.foundme.R
 import com.ugisozols.foundme.auth_feature.presentation.components.AuthButton
 import com.ugisozols.foundme.auth_feature.presentation.components.AuthSpacer
 import com.ugisozols.foundme.auth_feature.presentation.register.util.RegistrationProcess
+import com.ugisozols.foundme.auth_feature.util.AuthError
 import com.ugisozols.foundme.core.presentation.components.StandardTextField
+import com.ugisozols.foundme.core.presentation.components.UiAction
 import com.ugisozols.foundme.core.presentation.ui.theme.authFieldPaddingSize
 import com.ugisozols.foundme.core.presentation.ui.theme.mainGradient
 import com.ugisozols.foundme.core.presentation.ui.theme.shapes.CircleShape
 import com.ugisozols.foundme.core.presentation.ui.theme.shapes.DecorativeCircleCut
+import com.ugisozols.foundme.core.presentation.ui.theme.textColor
+import com.ugisozols.foundme.core.util.TextMessage
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.collectLatest
+import timber.log.Timber
 
 @Composable
 fun RegisterScreen(
-    navController: NavController
+    navController: NavController,
+    scaffoldState : ScaffoldState,
+    viewModel : RegisterViewModel = hiltViewModel()
 ){
-    Column(
-        Modifier
-            .fillMaxSize()
-            .background(Brush.verticalGradient(mainGradient))) {
-        CircleShape(
-            Modifier
-                .wrapContentSize(unbounded = true)
-                .offset(x = 75.dp, y = (-550).dp))
 
-        DecorativeCircleCut(
-            Modifier
-                .wrapContentSize(unbounded = true)
-        )
-    }
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(authFieldPaddingSize),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        RegisterInputSection(modifier = Modifier.align(Alignment.Start))
-        PasswordInputSection(modifier = Modifier.align(Alignment.Start))
-        ConfirmPasswordInputSection(modifier= Modifier.align(Alignment.Start))
-        AuthSpacer()
-        RegisterUserButton(modifier = Modifier.align(Alignment.End))
+    val context = LocalContext.current
+    LaunchedEffect(key1 = true){
+        Timber.d("This is when you should see snackbar")
+        viewModel.event.collectLatest {
+            when(it){
+                is UiAction.ShowSnackbar -> {
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = "Test",
+                        "Test",
+                        SnackbarDuration.Long
+                    )
+                }
+            }
+        }
     }
 
+
+    Box(modifier = Modifier.fillMaxSize()){
+
+        Column(
+            Modifier
+                .fillMaxSize()
+                .background(Brush.verticalGradient(mainGradient))) {
+            CircleShape(
+                Modifier
+                    .wrapContentSize(unbounded = true)
+                    .offset(x = 75.dp, y = (-550).dp))
+
+            DecorativeCircleCut(
+                Modifier
+                    .wrapContentSize(unbounded = true)
+            )
+        }
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(authFieldPaddingSize),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+
+            RegisterInputSection(modifier = Modifier.align(Alignment.Start))
+            PasswordInputSection(modifier = Modifier.align(Alignment.Start))
+            ConfirmPasswordInputSection(modifier= Modifier.align(Alignment.Start))
+            AuthSpacer()
+            RegisterUserButton(modifier = Modifier.align(Alignment.End))
+        }
+
+    }
+    }
+
+
+@Composable
+fun TextMessage.asString(): String {
+    return when (this){
+        is TextMessage.SimpleString -> this.value
+        is TextMessage.StringFromResources -> stringResource(id = this.id)
+    }
 }
+fun TextMessage.asString(context: Context): String {
+    return when (this){
+        is TextMessage.SimpleString -> this.value
+        is TextMessage.StringFromResources -> context.getString(this.id)
+    }
+}
+
 
 @Composable
 fun RegisterInputSection(
@@ -75,6 +128,15 @@ fun RegisterInputSection(
         text = email.text,
         onValueChange = { input ->
             viewModel.onEvent(RegistrationProcess.EmailInput(input))
+        },
+        error = when(email.error){
+            is AuthError.InvalidEmail ->{
+                stringResource(id = R.string.auth_invalid_email)
+            }
+            is AuthError.FieldEmpty ->{
+                stringResource(id = R.string.field_empty)
+            }
+            else -> ""
         }
     )
 }
@@ -85,7 +147,7 @@ fun PasswordInputSection(
     modifier: Modifier,
     viewModel: RegisterViewModel = hiltViewModel()
 ){
-    val passwordState = viewModel.passwordState.value
+    val password = viewModel.passwordState.value
     Text(
         text = stringResource(id = R.string.auth_password),
         modifier = modifier,
@@ -93,9 +155,18 @@ fun PasswordInputSection(
     )
     AuthSpacer()
     StandardTextField(
-        text = passwordState.text ,
+        text = password.text ,
         onValueChange = { input ->
             viewModel.onEvent(RegistrationProcess.PasswordInput(input))
+        },
+        error = when(password.error) {
+            is AuthError.FieldEmpty -> {
+                stringResource(id = R.string.field_empty)
+            }
+            is AuthError.PasswordTooShort -> {
+                stringResource(id = R.string.auth_password_too_short)
+            }
+            else -> ""
         },
         isVisible = false,
         keyboardInput = KeyboardType.Password
@@ -108,7 +179,7 @@ fun ConfirmPasswordInputSection(
     modifier: Modifier,
     viewModel: RegisterViewModel = hiltViewModel()
 ){
-    val confirmedPasswordState = viewModel.confirmedPasswordState.value
+    val confirmedPassword = viewModel.confirmedPasswordState.value
     Text(
         text = stringResource(id = R.string.auth_confirmed_password),
         modifier = modifier,
@@ -116,9 +187,18 @@ fun ConfirmPasswordInputSection(
     )
     AuthSpacer()
     StandardTextField(
-        text = confirmedPasswordState.text,
+        text = confirmedPassword.text,
         onValueChange = { input ->
             viewModel.onEvent(RegistrationProcess.ConfirmedPasswordInput(input))
+        },
+        error = when(confirmedPassword.error) {
+            is AuthError.FieldEmpty -> {
+                stringResource(id = R.string.field_empty)
+            }
+            is AuthError.PasswordsDoNotMatch -> {
+                stringResource(id = R.string.auth_passwords_do_not_match)
+            }
+            else -> ""
         },
         isVisible = false,
         keyboardInput = KeyboardType.Password
@@ -130,11 +210,19 @@ fun RegisterUserButton(
     modifier: Modifier,
     viewModel: RegisterViewModel = hiltViewModel()
 ){
-    AuthButton(
-        modifier = modifier,
-        buttonText = stringResource(id = R.string.auth_register_button),
-        onButtonClick = {
-            viewModel.onEvent(RegistrationProcess.Register)
-        }
-    )
+    val registerState = viewModel.registrationProcessState.value
+    Row(modifier = modifier) {
+        if(registerState.isLoading)
+        CircularProgressIndicator(modifier = modifier.size(35.dp), color = textColor)
+        Spacer(modifier = modifier.width(10.dp))
+        AuthButton(
+            modifier = modifier,
+            buttonText = stringResource(id = R.string.auth_register_button),
+            onButtonClick = {
+                viewModel.onEvent(RegistrationProcess.Register)
+
+            }
+        )
+    }
 }
+

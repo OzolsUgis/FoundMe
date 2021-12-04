@@ -30,7 +30,5 @@ val Typography = Typography(
         fontWeight = Bold,
         color = textColor,
         fontSize = 16.sp
-    ),
-
-
+    )
 )

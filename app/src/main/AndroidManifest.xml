@@ -3,6 +3,8 @@
     package="com.ugisozols.foundme">
 
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".FoundMeApplication"
         android:allowBackup="true"
@@ -10,7 +12,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FoundMe">
+        android:theme="@style/Theme.FoundMe"
+        android:usesCleartextTraffic="true"
+        >
+
         <activity
             android:name="com.ugisozols.foundme.core.presentation.MainActivity"
             android:exported="true"

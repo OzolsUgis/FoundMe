@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">FoundMe</string>
+    <string name="field_empty">Field Empty</string>
     <string name="auth_email">Email</string>
     <string name="auth_password">Password</string>
     <string name="auth_confirmed_password">Confirm Password</string>
     <string name="auth_register_button">Register</string>
     <string name="auth_successfully_registered">Registration completed</string>
     <string name="auth_unknown_error">Unknown error occurred</string>
+    <string name="auth_invalid_email">Invalid email</string>
+    <string name="auth_password_too_short">Minimum 8 characters</string>
+    <string name="auth_passwords_do_not_match">Passwords do not match</string>
+    <string name="server_not_found">Couldn\'t reach server</string>
+    <string name="server_something_went_wrong">Something went wrong</string>
 </resources>

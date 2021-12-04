@@ -8,14 +8,18 @@ import com.ugisozols.foundme.R
 import com.ugisozols.foundme.auth_feature.domain.use_case.RegisterUseCase
 import com.ugisozols.foundme.auth_feature.presentation.register.util.RegistrationProcess
 import com.ugisozols.foundme.auth_feature.presentation.register.util.RegistrationProcessState
+import com.ugisozols.foundme.auth_feature.util.AuthError
 import com.ugisozols.foundme.core.domain.states.InputFieldState
 import com.ugisozols.foundme.core.presentation.components.UiAction
 import com.ugisozols.foundme.core.util.Resource
 import com.ugisozols.foundme.core.util.TextMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,7 +40,8 @@ class RegisterViewModel @Inject constructor(
     val registrationProcessState : State<RegistrationProcessState> = _registerProcessState
 
     private val _event = MutableSharedFlow<UiAction>()
-    val event : SharedFlow<UiAction> = _event
+    val event = _event.asSharedFlow()
+
 
     fun onEvent(process : RegistrationProcess){
         when(process){
@@ -63,6 +68,7 @@ class RegisterViewModel @Inject constructor(
 
     fun register(){
         viewModelScope.launch {
+            _registerProcessState.value = RegistrationProcessState(isLoading = true)
             _emailState.value = emailState.value.copy(error = null)
             _passwordState.value = passwordState.value.copy(error = null)
             _confirmedPasswordState.value = confirmedPasswordState.value.copy(error = null)
@@ -92,6 +98,7 @@ class RegisterViewModel @Inject constructor(
             }
             when(registerResult.result){
                 is Resource.Success ->{
+                    Timber.d("This is fro success state")
                     _event.emit(
                         UiAction.ShowSnackbar(
                             TextMessage.StringFromResources(R.string.auth_successfully_registered)
