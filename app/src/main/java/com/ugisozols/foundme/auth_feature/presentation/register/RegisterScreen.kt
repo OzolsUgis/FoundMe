@@ -46,20 +46,6 @@ fun RegisterScreen(
 ){
 
     val context = LocalContext.current
-    LaunchedEffect(key1 = true){
-        Timber.d("This is when you should see snackbar")
-        viewModel.event.collectLatest {
-            when(it){
-                is UiAction.ShowSnackbar -> {
-                    scaffoldState.snackbarHostState.showSnackbar(
-                        message = "Test",
-                        "Test",
-                        SnackbarDuration.Long
-                    )
-                }
-            }
-        }
-    }
 
 
     Box(modifier = Modifier.fillMaxSize()){
@@ -67,7 +53,9 @@ fun RegisterScreen(
         Column(
             Modifier
                 .fillMaxSize()
-                .background(Brush.verticalGradient(mainGradient))) {
+                .background(Brush.verticalGradient(mainGradient))
+        )
+        {
             CircleShape(
                 Modifier
                     .wrapContentSize(unbounded = true)
@@ -93,17 +81,23 @@ fun RegisterScreen(
             RegisterUserButton(modifier = Modifier.align(Alignment.End))
         }
 
+        LaunchedEffect(key1 = true){
+            viewModel.event.collectLatest { action ->
+                when(action){
+                    is UiAction.ShowSnackbar -> {
+                        scaffoldState.snackbarHostState.showSnackbar(
+                            message = action.text.asString(context = context),
+                            duration = SnackbarDuration.Short
+                        )
+                    }
+                }
+            }
+        }
     }
     }
 
 
-@Composable
-fun TextMessage.asString(): String {
-    return when (this){
-        is TextMessage.SimpleString -> this.value
-        is TextMessage.StringFromResources -> stringResource(id = this.id)
-    }
-}
+
 fun TextMessage.asString(context: Context): String {
     return when (this){
         is TextMessage.SimpleString -> this.value

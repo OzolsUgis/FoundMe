@@ -112,7 +112,7 @@ class RegisterViewModel @Inject constructor(
                 is Resource.Error ->{
                     _event.emit(
                         UiAction.ShowSnackbar(
-                            TextMessage.StringFromResources(R.string.auth_unknown_error)
+                            registerResult.result.message ?: TextMessage.StringFromResources(R.string.auth_unknown_error)
                         )
                     )
                     _registerProcessState.value = RegistrationProcessState(isLoading = false)
