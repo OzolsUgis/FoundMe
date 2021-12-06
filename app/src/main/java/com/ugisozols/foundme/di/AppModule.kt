@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.ugisozols.foundme.auth_feature.data.remote.AuthApi
 import com.ugisozols.foundme.core.util.Constants
 import com.ugisozols.foundme.core.util.Constants.SHARED_PREF_NAME
 import dagger.Module
@@ -13,6 +14,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -54,4 +57,17 @@ object AppModule {
             )
             .build()
     }
+
+
+    @Provides
+    @Singleton
+    fun provideAuthApi(client: OkHttpClient): AuthApi {
+        return Retrofit.Builder()
+            .baseUrl(AuthApi.BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(AuthApi::class.java)
+    }
+
 }

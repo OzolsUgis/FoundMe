@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.ugisozols.foundme.auth_feature.presentation.login.LoginScreen
 import com.ugisozols.foundme.auth_feature.presentation.register.RegisterScreen
 import com.ugisozols.foundme.core.util.Screen
 
@@ -23,8 +24,11 @@ fun NavHostController.Navigation(
        startDestination = Screen.Register.route,
        modifier = Modifier.fillMaxSize()
    ){
-       composable(Screen.Register.route){
-           RegisterScreen(navController,scaffoldState)
+       composable(Screen.Register.route) {
+           RegisterScreen(navController, scaffoldState)
+       }
+       composable(Screen.Login.route){
+           LoginScreen()
        }
 
    }

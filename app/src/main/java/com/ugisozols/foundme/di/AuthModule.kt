@@ -4,7 +4,9 @@ import android.content.SharedPreferences
 import com.ugisozols.foundme.auth_feature.data.remote.AuthApi
 import com.ugisozols.foundme.auth_feature.data.repository.AuthRepositoryImpl
 import com.ugisozols.foundme.auth_feature.domain.repository.AuthRepository
+import com.ugisozols.foundme.auth_feature.domain.use_case.LoginUseCase
 import com.ugisozols.foundme.auth_feature.domain.use_case.RegisterUseCase
+import com.ugisozols.foundme.core.util.Screen
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,17 +22,6 @@ object AuthModule {
 
     @Provides
     @Singleton
-    fun provideAuthApi(client: OkHttpClient): AuthApi{
-        return Retrofit.Builder()
-            .baseUrl(AuthApi.BASE_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(AuthApi::class.java)
-    }
-
-    @Provides
-    @Singleton
     fun provideAuthRepository(
         api : AuthApi,
         sharedPreferences: SharedPreferences
@@ -43,6 +34,12 @@ object AuthModule {
         repository: AuthRepository
     ): RegisterUseCase{
         return RegisterUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLoginCase(repository: AuthRepository): LoginUseCase{
+        return LoginUseCase(repository)
     }
 
 }

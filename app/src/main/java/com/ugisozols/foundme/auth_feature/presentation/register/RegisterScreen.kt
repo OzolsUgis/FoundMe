@@ -1,21 +1,15 @@
 package com.ugisozols.foundme.auth_feature.presentation.register
 
 import android.content.Context
-import android.widget.Space
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -23,11 +17,9 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ugisozols.foundme.R
 import com.ugisozols.foundme.auth_feature.presentation.components.AuthButton
 import com.ugisozols.foundme.auth_feature.presentation.components.AuthSpacer
@@ -38,16 +30,15 @@ import com.ugisozols.foundme.core.presentation.components.UiAction
 import com.ugisozols.foundme.core.presentation.ui.theme.*
 import com.ugisozols.foundme.core.presentation.ui.theme.shapes.CircleShape
 import com.ugisozols.foundme.core.presentation.ui.theme.shapes.DecorativeCircleCut
+import com.ugisozols.foundme.core.util.Screen
 import com.ugisozols.foundme.core.util.TextMessage
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collectLatest
-import timber.log.Timber
 
 @Composable
 fun RegisterScreen(
     navController: NavController,
-    scaffoldState : ScaffoldState,
-    viewModel : RegisterViewModel = hiltViewModel()
+    scaffoldState: ScaffoldState,
+    viewModel: RegisterViewModel = hiltViewModel()
 ){
 
     val context = LocalContext.current
@@ -236,7 +227,7 @@ fun LoginSection (
 ){
     Row(
         modifier = Modifier.clickable {
-           // navController.navigate()
+           navController.navigate(Screen.Login.route)
         }
             .height(registerScreenLoginButtonHeight)
             .width(registerScreenLoginButtonWidth),
