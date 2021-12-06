@@ -12,4 +12,6 @@
     <string name="auth_passwords_do_not_match">Passwords do not match</string>
     <string name="server_not_found">Couldn\'t reach server</string>
     <string name="server_something_went_wrong">Something went wrong</string>
+    <string name="have_account">Click here to </string>
+    <string name="login">Login</string>
 </resources>

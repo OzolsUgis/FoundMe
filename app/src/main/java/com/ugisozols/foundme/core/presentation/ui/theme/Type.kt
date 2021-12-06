@@ -28,7 +28,7 @@ val Typography = Typography(
     body2 = TextStyle(
         fontFamily = quicksand,
         fontWeight = Bold,
-        color = textColor,
+        color = lightPink,
         fontSize = 16.sp
     )
 )

@@ -1,7 +1,10 @@
 package com.ugisozols.foundme.auth_feature.presentation.register
 
 import android.content.Context
+import android.widget.Space
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -15,7 +18,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -28,11 +35,9 @@ import com.ugisozols.foundme.auth_feature.presentation.register.util.Registratio
 import com.ugisozols.foundme.auth_feature.util.AuthError
 import com.ugisozols.foundme.core.presentation.components.StandardTextField
 import com.ugisozols.foundme.core.presentation.components.UiAction
-import com.ugisozols.foundme.core.presentation.ui.theme.authFieldPaddingSize
-import com.ugisozols.foundme.core.presentation.ui.theme.mainGradient
+import com.ugisozols.foundme.core.presentation.ui.theme.*
 import com.ugisozols.foundme.core.presentation.ui.theme.shapes.CircleShape
 import com.ugisozols.foundme.core.presentation.ui.theme.shapes.DecorativeCircleCut
-import com.ugisozols.foundme.core.presentation.ui.theme.textColor
 import com.ugisozols.foundme.core.util.TextMessage
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collectLatest
@@ -46,6 +51,18 @@ fun RegisterScreen(
 ){
 
     val context = LocalContext.current
+    LaunchedEffect(key1 = true){
+        viewModel.event.collectLatest { action ->
+            when(action){
+                is UiAction.ShowSnackbar -> {
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = action.text.asString(context = context),
+                        duration = SnackbarDuration.Short
+                    )
+                }
+            }
+        }
+    }
 
 
     Box(modifier = Modifier.fillMaxSize()){
@@ -73,26 +90,19 @@ fun RegisterScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-
+            //TODO Implement Project Logo
+            Spacer(modifier = Modifier.height(spacerSize))
+            Spacer(modifier = Modifier.height(spacerSize))
             RegisterInputSection(modifier = Modifier.align(Alignment.Start))
             PasswordInputSection(modifier = Modifier.align(Alignment.Start))
             ConfirmPasswordInputSection(modifier= Modifier.align(Alignment.Start))
             AuthSpacer()
             RegisterUserButton(modifier = Modifier.align(Alignment.End))
+            Spacer(modifier = Modifier.height(spacerSize))
+            LoginSection(navController)
         }
 
-        LaunchedEffect(key1 = true){
-            viewModel.event.collectLatest { action ->
-                when(action){
-                    is UiAction.ShowSnackbar -> {
-                        scaffoldState.snackbarHostState.showSnackbar(
-                            message = action.text.asString(context = context),
-                            duration = SnackbarDuration.Short
-                        )
-                    }
-                }
-            }
-        }
+
     }
     }
 
@@ -218,5 +228,29 @@ fun RegisterUserButton(
             }
         )
     }
+}
+
+@Composable
+fun LoginSection (
+    navController: NavController
+){
+    Row(
+        modifier = Modifier.clickable {
+           // navController.navigate()
+        }
+            .height(registerScreenLoginButtonHeight)
+            .width(registerScreenLoginButtonWidth),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(text = stringResource(id = R.string.have_account))
+        Spacer(modifier = Modifier.width(6.dp))
+        Text(buildAnnotatedString {
+            withStyle(SpanStyle(fontWeight = FontWeight.Bold)){
+                append(stringResource(id = R.string.login))
+            }
+        })
+    }
+
 }
 

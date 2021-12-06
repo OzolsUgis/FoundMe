@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         scaffoldState = scaffoldState
                     ) {
-                        navController.Navigation(scaffoldState)
+                        navController.Navigation(navController,scaffoldState)
                     }
 
 

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 
 
 import androidx.navigation.NavHostController
@@ -14,7 +15,8 @@ import com.ugisozols.foundme.core.util.Screen
 
 @Composable
 fun NavHostController.Navigation(
-scaffoldState : ScaffoldState
+    navController: NavController,
+    scaffoldState : ScaffoldState
 ){
    NavHost(
        navController = this,
@@ -22,7 +24,7 @@ scaffoldState : ScaffoldState
        modifier = Modifier.fillMaxSize()
    ){
        composable(Screen.Register.route){
-           RegisterScreen(navController = this@Navigation, scaffoldState)
+           RegisterScreen(navController,scaffoldState)
        }
 
    }
